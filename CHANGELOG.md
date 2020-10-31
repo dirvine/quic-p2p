@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.1.0 (2020-10-31)
+
+
+### Features
+
+* **api:** add api to get connection stream without sending a ([5d720dd](https://github.com/dirvine/quic-p2p/commit/5d720dd3052a103152826c98e5a925f95343f3dc))
+* **api:** change bootstrap_nodes arg in with_config API to be an slice rather than a VecDeque ([a505065](https://github.com/dirvine/quic-p2p/commit/a50506513a0f2623d0ae00a359b5d4ac167ccfb0))
+* **api:** expose an async API ([5617cdd](https://github.com/dirvine/quic-p2p/commit/5617cdd1795c0e5a43f2da40fd31c1fdc8025181))
+* **api:** refactor the API to allow reusing of streams to exchange ([097c0dc](https://github.com/dirvine/quic-p2p/commit/097c0dc236e224d365a757867e69ca426dc82288))
+* **async-api:** add support for listening to messages from both uni-streams and bi-streams ([25d1163](https://github.com/dirvine/quic-p2p/commit/25d11637eb0941f06fd109144c539e7e27394232))
+* **async-api:** expose a 'listen' API which return a stream of connections and in turn messages ([2bbfb21](https://github.com/dirvine/quic-p2p/commit/2bbfb21436637305a40c6b6fa4fd55c26693b9f8))
+* **async-api:** expose a function to query remote address from a Connection ([3f624ba](https://github.com/dirvine/quic-p2p/commit/3f624ba1157a3d7269b9e398e22cd214780e4b7b))
+* **async-api:** support for bootstrapping using multiple nodes concurrently ([8a07250](https://github.com/dirvine/quic-p2p/commit/8a072507fe40210600f2f0ce4dfac375ba7457f5))
+* **async-api:** support sending a message on a Connection and awaiting for a response using unidirectional streams ([9b81728](https://github.com/dirvine/quic-p2p/commit/9b81728d92ce269756c825e426d54cabe9f67154))
+* **audit:** add scheduled security audit scan ([d017920](https://github.com/dirvine/quic-p2p/commit/d0179202c27f7192daf0deed9c6540f9d96622d7))
+* **header:** add message header that is sent over the wire for data ([4dc09b8](https://github.com/dirvine/quic-p2p/commit/4dc09b8b53c3557bb270d84b45e77872cc084394))
+
+
+### Bug Fixes
+
+* **client-ip:** set to use loopback ip if hard coded contacts are loopback ([06fb27f](https://github.com/dirvine/quic-p2p/commit/06fb27f7a24d4030029d1739746f18344c7b65b2))
+* **endpoint:** return error if no local addr was specified and IGD is not available ([940dce9](https://github.com/dirvine/quic-p2p/commit/940dce912d96bbf61db3eae622587f4984c0d041))
+* **log:** minor fixes in log messages ([0a9bf09](https://github.com/dirvine/quic-p2p/commit/0a9bf09f7a628843e014302e81d21070af5a5566))
+* **port:** update qp2p endpoint port when a random port is used ([cfccd1c](https://github.com/dirvine/quic-p2p/commit/cfccd1ce04a9718aa4ba9723814323f0e6836b8a))
+* **stream:** send the correct number of bytes to read/write usize from ([7e1820e](https://github.com/dirvine/quic-p2p/commit/7e1820eef2fac0e8b8ed5cadfdeb02c507e1a70e))
+* **tests:** refactor and fix tests to use the new API ([8088adf](https://github.com/dirvine/quic-p2p/commit/8088adfdcf914152c845a5220c4762bcecee0ab8))
+* handle key and certificate parse errors ([6e4cd2b](https://github.com/dirvine/quic-p2p/commit/6e4cd2b584e8eecb50ddffa35b18918b8cde7361))
+* return error on connection failure ([43c844e](https://github.com/dirvine/quic-p2p/commit/43c844ed3aee702f561abe3ddc9fc9f5cfaf1c4b))
+
 ### [0.8.6](https://github.com/maidsafe/qp2p/compare/v0.8.5...v0.8.6) (2020-10-27)
 
 ### [0.8.5](https://github.com/maidsafe/qp2p/compare/v0.8.4...v0.8.5) (2020-10-26)
