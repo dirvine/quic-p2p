@@ -2,6 +2,65 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.0.0 (2021-01-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* `QuicP2p::bootstrap` return type changed from `Result<(Endpoint, Connection)>` to `Result<(Endpoint, Connection, IncomingMessages)>`.
+* Dropping `Connection` while some send/recv streams are still in scope no longer closes the connection. All those streams must be dropped too before the connection is closed.
+*     - `Endpoint::connect_to` now returns pair or `(Connection, Option<IncomingMessages>)` (previously it returned only `Connection`).
+    - `Connection::open_bi_stream` renamed to `open_bi` (same as in quinn)
+    - `Connection::send` renamed to `send_bi` for consistency
+    - `Endpoint::listen` no longer returns `Result`
+
+### Features
+
+* **api:** add more error variants and use them instead of ([bb56857](https://github.com/dirvine/quic-p2p/commit/bb56857054d214e2e5cac34f568c5b218c353fd5))
+* add Endpoint::close ([2cedb77](https://github.com/dirvine/quic-p2p/commit/2cedb77f417c8e66fadf162b8e73aa04c71f5845))
+* do not close `quinn::Connection` on `Connection` drop ([1e5ee89](https://github.com/dirvine/quic-p2p/commit/1e5ee8988d29c90fb2080ad63342b35d3a5c6e3c))
+* implement Clone for Connection ([51de4c8](https://github.com/dirvine/quic-p2p/commit/51de4c865a5d0bdaf22d28c1886f011c39500476))
+* implement connection deduplication ([175c563](https://github.com/dirvine/quic-p2p/commit/175c5635db935b60bdf590ce99b23e196f6c0d0b))
+* implement connection pooling ([6edb290](https://github.com/dirvine/quic-p2p/commit/6edb29049a7ef13cd39ba0289a6983c165d7bafa))
+* re-export quinn::ConnectionError ([c10895d](https://github.com/dirvine/quic-p2p/commit/c10895da0042110b7d231483c6dcd2bf00adcb0e))
+* remove connection from the pool when manually closed ([815eb11](https://github.com/dirvine/quic-p2p/commit/815eb110f59e1511f61b251975016fd25073df8b))
+* return also IncomingMessages from QuicP2p::bootstrap ([cd18837](https://github.com/dirvine/quic-p2p/commit/cd18837e81033b5753d926bd475a2289ab29c997))
+* **api:** add api to get connection stream without sending a ([5d720dd](https://github.com/dirvine/quic-p2p/commit/5d720dd3052a103152826c98e5a925f95343f3dc))
+* **api:** change bootstrap_nodes arg in with_config API to be an slice rather than a VecDeque ([a505065](https://github.com/dirvine/quic-p2p/commit/a50506513a0f2623d0ae00a359b5d4ac167ccfb0))
+* **api:** expose an async API ([5617cdd](https://github.com/dirvine/quic-p2p/commit/5617cdd1795c0e5a43f2da40fd31c1fdc8025181))
+* **api:** refactor the API to allow reusing of streams to exchange ([097c0dc](https://github.com/dirvine/quic-p2p/commit/097c0dc236e224d365a757867e69ca426dc82288))
+* **async-api:** add support for listening to messages from both uni-streams and bi-streams ([25d1163](https://github.com/dirvine/quic-p2p/commit/25d11637eb0941f06fd109144c539e7e27394232))
+* **async-api:** expose a 'listen' API which return a stream of connections and in turn messages ([2bbfb21](https://github.com/dirvine/quic-p2p/commit/2bbfb21436637305a40c6b6fa4fd55c26693b9f8))
+* **async-api:** expose a function to query remote address from a Connection ([3f624ba](https://github.com/dirvine/quic-p2p/commit/3f624ba1157a3d7269b9e398e22cd214780e4b7b))
+* **async-api:** support for bootstrapping using multiple nodes concurrently ([8a07250](https://github.com/dirvine/quic-p2p/commit/8a072507fe40210600f2f0ce4dfac375ba7457f5))
+* **async-api:** support sending a message on a Connection and awaiting for a response using unidirectional streams ([9b81728](https://github.com/dirvine/quic-p2p/commit/9b81728d92ce269756c825e426d54cabe9f67154))
+* **audit:** add scheduled security audit scan ([d017920](https://github.com/dirvine/quic-p2p/commit/d0179202c27f7192daf0deed9c6540f9d96622d7))
+* **config:** add --fresh and --clean flags to the config to prevent use ([b685d77](https://github.com/dirvine/quic-p2p/commit/b685d77a93099d44d56624704545a6e043758711))
+* **header:** add message header that is sent over the wire for data ([4dc09b8](https://github.com/dirvine/quic-p2p/commit/4dc09b8b53c3557bb270d84b45e77872cc084394))
+* **port_forwarding:** refactor IGD and echo service to be async ([a19cd51](https://github.com/dirvine/quic-p2p/commit/a19cd51e160f531571f6ba91a6c0ce7a672e66b7))
+* **upnp:** add config to disable port forwarding for clients ([4a14488](https://github.com/dirvine/quic-p2p/commit/4a144886cc1924ea51fa783625551849be8cab84))
+
+
+### Bug Fixes
+
+* **client-ip:** set to use loopback ip if hard coded contacts are loopback ([06fb27f](https://github.com/dirvine/quic-p2p/commit/06fb27f7a24d4030029d1739746f18344c7b65b2))
+* **example:** dont use LocalHost in example ([d617fef](https://github.com/dirvine/quic-p2p/commit/d617fefed73d9b5aedec55e887a64948415c1a9d))
+* **example:** remove panics from the example ([20dfe02](https://github.com/dirvine/quic-p2p/commit/20dfe02a603f5a2f9e33f5171fddebbbf3daabb9))
+* **igd:** don't skip port forwarding if local IP address is specified ([3b0e093](https://github.com/dirvine/quic-p2p/commit/3b0e0936e18880cee12256af1713c4c1390ab406))
+* do not initialize logger in QuicP2p constructor ([4952639](https://github.com/dirvine/quic-p2p/commit/495263925d3f6bb4e3c544df0fa569d5ef085665))
+* proper error on empty bootstrap ([db61592](https://github.com/dirvine/quic-p2p/commit/db6159250d3c035a1fab5ac4d6d55cc155cb6e9e))
+* **echo_service:** respond to echo service request and expand test ([40217e1](https://github.com/dirvine/quic-p2p/commit/40217e1fa4f666ddd3b4decff1b94a9b29e685e4))
+* **echo_service_test:** refactor test to use tokio::spawn and join! ([2f82af2](https://github.com/dirvine/quic-p2p/commit/2f82af2047b186d996c5e139e57160cf1cdda4e0))
+* **endpoint:** return error if no local addr was specified and IGD is not available ([940dce9](https://github.com/dirvine/quic-p2p/commit/940dce912d96bbf61db3eae622587f4984c0d041))
+* **examples:** Fix clippy errors in examples ([c201df3](https://github.com/dirvine/quic-p2p/commit/c201df3bfb6d1f8ec50274c8637937d85036895c))
+* **log:** minor fixes in log messages ([0a9bf09](https://github.com/dirvine/quic-p2p/commit/0a9bf09f7a628843e014302e81d21070af5a5566))
+* **port:** update qp2p endpoint port when a random port is used ([cfccd1c](https://github.com/dirvine/quic-p2p/commit/cfccd1ce04a9718aa4ba9723814323f0e6836b8a))
+* **stream:** send the correct number of bytes to read/write usize from ([7e1820e](https://github.com/dirvine/quic-p2p/commit/7e1820eef2fac0e8b8ed5cadfdeb02c507e1a70e))
+* **tests:** refactor and fix tests to use the new API ([8088adf](https://github.com/dirvine/quic-p2p/commit/8088adfdcf914152c845a5220c4762bcecee0ab8))
+* **upnp:** add timeout for IGD and echo service ([2167ead](https://github.com/dirvine/quic-p2p/commit/2167eade5d2f72c4d7efdeb81c14f88cfd89ff39))
+* handle key and certificate parse errors ([6e4cd2b](https://github.com/dirvine/quic-p2p/commit/6e4cd2b584e8eecb50ddffa35b18918b8cde7361))
+* return error on connection failure ([43c844e](https://github.com/dirvine/quic-p2p/commit/43c844ed3aee702f561abe3ddc9fc9f5cfaf1c4b))
+
 ### [0.9.7](https://github.com/maidsafe/qp2p/compare/v0.9.6...v0.9.7) (2020-12-29)
 
 ### [0.9.6](https://github.com/maidsafe/qp2p/compare/v0.9.5...v0.9.6) (2020-12-10)
