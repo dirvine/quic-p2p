@@ -10,7 +10,7 @@
 use super::error::Error;
 use super::wire_msg::WireMsg;
 #[cfg(not(feature = "no-igd"))]
-use super::{api::DEFAULT_UPNP_LEASE_DURATION_SEC, igd::forward_port};
+use super::{api::DEFAULT_UPNP_LEASE_DURATION_SEC, igd::use_igd};
 use super::{
     connection_deduplicator::ConnectionDeduplicator,
     connection_pool::ConnectionPool,
@@ -220,11 +220,11 @@ impl Endpoint {
         }
 
         #[cfg(not(feature = "no-igd"))]
-        if self.qp2p_config.forward_port {
+        if self.qp2p_config.use_igd {
             // Attempt to use IGD for port forwarding
             match timeout(
                 Duration::from_secs(PORT_FORWARD_TIMEOUT),
-                forward_port(
+                use_igd(
                     self.local_addr,
                     self.qp2p_config
                         .upnp_lease_duration
